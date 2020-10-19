@@ -3,4 +3,5 @@
     <string name="title_my">我的</string>
     <string name="title_reservation">预约停车</string>
     <string name="title_vicinity">附近停车</string>
+    <string name="app_version">V1.0.0</string>
 </resources>
