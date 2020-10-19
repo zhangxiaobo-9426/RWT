@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/vicinityFragment">
+
+    <fragment
+        android:id="@+id/vicinityFragment"
+        android:name="com.example.rwt.ui.vicinity.VicinityFragment"
+        android:label="@string/title_vicinity"
+        tools:layout="@layout/vicinity_fragment" />
+    <fragment
+        android:id="@+id/reservationFragment"
+        android:name="com.example.rwt.ui.reservation.ReservationFragment"
+        android:label="@string/title_reservation"
+        tools:layout="@layout/reservation_fragment" />
+    <fragment
+        android:id="@+id/myFragment"
+        android:name="com.example.rwt.ui.my.MyFragment"
+        android:label="@string/title_my"
+        tools:layout="@layout/my_fragment" />
+</navigation>

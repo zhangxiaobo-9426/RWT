@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/vicinityFragment"
+        android:icon="@drawable/ic_vicinity_black_24dp"
+        android:title="@string/title_vicinity" />
+    <item
+        android:id="@+id/reservationFragment"
+        android:icon="@drawable/ic_reservation_black_24dp"
+        android:title="@string/title_reservation" />
+    <item
+        android:id="@+id/myFragment"
+        android:icon="@drawable/ic_my_black_24dp"
+        android:title="@string/title_my" />
+</menu>
