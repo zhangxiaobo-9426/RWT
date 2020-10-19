@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="xaF2uRI5HpVI2Vw5hok8Qcd9tonpcn17"></meta-data>
         <activity android:name=".ui.start.StartActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
