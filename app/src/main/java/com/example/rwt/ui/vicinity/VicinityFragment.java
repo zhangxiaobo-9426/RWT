@@ -30,6 +30,7 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.example.rwt.R;
 
@@ -44,6 +45,7 @@ public class VicinityFragment extends Fragment {
     private View view;
     private MapView mapView;
     private BaiduMap baiduMap =null;
+    private boolean isFirstLocation =true;
 
     public static VicinityFragment newInstance() {
         return new VicinityFragment();
@@ -202,13 +204,23 @@ public class VicinityFragment extends Fragment {
         }
     }
     private void navigateTo(BDLocation bdLocation){
-        LatLng latLng =new LatLng(bdLocation.getLatitude(),bdLocation.getLongitude());
-        MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(latLng);
-        baiduMap.animateMapStatus(update);
+        if (isFirstLocation) {
+            LatLng latLng = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
+            MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(latLng);
+            baiduMap.animateMapStatus(update);
 
-        //设置大小
-        update = MapStatusUpdateFactory.zoomTo(16f);
-        baiduMap.animateMapStatus(update);
+            //设置大小
+            update = MapStatusUpdateFactory.zoomTo(16f);
+            baiduMap.animateMapStatus(update);
+            isFirstLocation =false;
+        }
+
+        //显示自己位置的图标
+        MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
+        locationBuilder.longitude(bdLocation.getLongitude());
+        locationBuilder.latitude(bdLocation.getLatitude());
+        MyLocationData locationData = locationBuilder.build();
+        baiduMap.setMyLocationData(locationData);
 
     }
 
