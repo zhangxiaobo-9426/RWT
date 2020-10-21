@@ -25,6 +25,9 @@ import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.MapView;
 import com.example.rwt.R;
 
 import java.util.ArrayList;
@@ -36,6 +39,8 @@ public class VicinityFragment extends Fragment {
     private TextView mLocationInfo;
     private LocationClient locationClient;
     private View view;
+    private MapView mapView;
+    private BaiduMap baiduMap =null;
 
     public static VicinityFragment newInstance() {
         return new VicinityFragment();
@@ -51,12 +56,21 @@ public class VicinityFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+//        SDKInitializer.initialize(getActivity().getApplicationContext());
+
         mViewModel = ViewModelProviders.of(this).get(VicinityViewModel.class);
         // TODO: Use the ViewModel
 
        mLocationInfo =view.findViewById(R.id.mLocationInfo);
        locationClient = new LocationClient(getContext());
        locationClient.registerLocationListener(new MyLocationListener());
+
+       mapView = view.findViewById(R.id.bmapView);
+       baiduMap = mapView.getMap();
+
+       baiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);
+
 
 
         List<String> permissionList = new ArrayList<>();
