@@ -27,7 +27,10 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.model.LatLng;
 import com.example.rwt.R;
 
 import java.util.ArrayList;
@@ -70,6 +73,9 @@ public class VicinityFragment extends Fragment {
        baiduMap = mapView.getMap();
 
        baiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);
+
+       //可以定位自己的位置
+        baiduMap.setMyLocationEnabled(true);
 
 
 
@@ -173,24 +179,56 @@ public class VicinityFragment extends Fragment {
     private class MyLocationListener extends BDAbstractLocationListener{
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
-            StringBuilder currentPosition = new StringBuilder();
-            currentPosition.append("维度：").append(bdLocation.getLatitude()).append("\n");
-            currentPosition.append("经度：").append(bdLocation.getLongitude()).append("\n");
-            currentPosition.append("国家：").append(bdLocation.getCountry()).append("\n");
-            currentPosition.append("省：").append(bdLocation.getProvince()).append("\n");
-            currentPosition.append("市：").append(bdLocation.getCity()).append("\n");
-            currentPosition.append("区：").append(bdLocation.getDistrict()).append("\n");
-            currentPosition.append("村镇：").append(bdLocation.getTown()).append("\n");
-            currentPosition.append("村道：").append(bdLocation.getStreet()).append("\n");
-            currentPosition.append("地址：").append(bdLocation.getAddrStr()).append("\n");
-            currentPosition.append("定位方式：");
-            if (bdLocation.getLocType() == BDLocation.TypeCacheLocation){
-                currentPosition.append("GPS");
-            }else  if(bdLocation.getLocType() == BDLocation.TypeNetWorkLocation){
-                currentPosition.append("网络");
-            }
-            mLocationInfo.setText(currentPosition);
+            navigateTo(bdLocation);
+//            StringBuilder currentPosition = new StringBuilder();
+//            currentPosition.append("维度：").append(bdLocation.getLatitude()).append("\n");
+//            currentPosition.append("经度：").append(bdLocation.getLongitude()).append("\n");
+//            currentPosition.append("国家：").append(bdLocation.getCountry()).append("\n");
+//            currentPosition.append("省：").append(bdLocation.getProvince()).append("\n");
+//            currentPosition.append("市：").append(bdLocation.getCity()).append("\n");
+//            currentPosition.append("区：").append(bdLocation.getDistrict()).append("\n");
+//            currentPosition.append("村镇：").append(bdLocation.getTown()).append("\n");
+//            currentPosition.append("村道：").append(bdLocation.getStreet()).append("\n");
+//            currentPosition.append("地址：").append(bdLocation.getAddrStr()).append("\n");
+//            currentPosition.append("定位方式：");
+//            if (bdLocation.getLocType() == BDLocation.TypeCacheLocation){
+//                currentPosition.append("GPS");
+//            }else  if(bdLocation.getLocType() == BDLocation.TypeNetWorkLocation){
+//                currentPosition.append("网络");
+//            }
+//            mLocationInfo.setText(currentPosition);
+
+
         }
     }
+    private void navigateTo(BDLocation bdLocation){
+        LatLng latLng =new LatLng(bdLocation.getLatitude(),bdLocation.getLongitude());
+        MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(latLng);
+        baiduMap.animateMapStatus(update);
 
+        //设置大小
+        update = MapStatusUpdateFactory.zoomTo(16f);
+        baiduMap.animateMapStatus(update);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+        baiduMap.setMyLocationEnabled(false);
+        locationClient.stop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
 }
