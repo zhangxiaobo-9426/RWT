@@ -25,6 +25,13 @@ import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.model.LatLng;
 import com.example.rwt.R;
 
 import java.util.ArrayList;
@@ -36,6 +43,9 @@ public class VicinityFragment extends Fragment {
     private TextView mLocationInfo;
     private LocationClient locationClient;
     private View view;
+    private MapView mapView;
+    private BaiduMap baiduMap =null;
+    private boolean isFirstLocation =true;
 
     public static VicinityFragment newInstance() {
         return new VicinityFragment();
@@ -51,12 +61,25 @@ public class VicinityFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+//        SDKInitializer.initialize(getActivity().getApplicationContext());
+
         mViewModel = ViewModelProviders.of(this).get(VicinityViewModel.class);
         // TODO: Use the ViewModel
 
        mLocationInfo =view.findViewById(R.id.mLocationInfo);
        locationClient = new LocationClient(getContext());
        locationClient.registerLocationListener(new MyLocationListener());
+
+       mapView = view.findViewById(R.id.bmapView);
+       baiduMap = mapView.getMap();
+
+       //显示的地图样式
+       baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+
+       //可以定位自己的位置
+        baiduMap.setMyLocationEnabled(true);
+
 
 
         List<String> permissionList = new ArrayList<>();
@@ -159,24 +182,66 @@ public class VicinityFragment extends Fragment {
     private class MyLocationListener extends BDAbstractLocationListener{
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
-            StringBuilder currentPosition = new StringBuilder();
-            currentPosition.append("维度：").append(bdLocation.getLatitude()).append("\n");
-            currentPosition.append("经度：").append(bdLocation.getLongitude()).append("\n");
-            currentPosition.append("国家：").append(bdLocation.getCountry()).append("\n");
-            currentPosition.append("省：").append(bdLocation.getProvince()).append("\n");
-            currentPosition.append("市：").append(bdLocation.getCity()).append("\n");
-            currentPosition.append("区：").append(bdLocation.getDistrict()).append("\n");
-            currentPosition.append("村镇：").append(bdLocation.getTown()).append("\n");
-            currentPosition.append("村道：").append(bdLocation.getStreet()).append("\n");
-            currentPosition.append("地址：").append(bdLocation.getAddrStr()).append("\n");
-            currentPosition.append("定位方式：");
-            if (bdLocation.getLocType() == BDLocation.TypeCacheLocation){
-                currentPosition.append("GPS");
-            }else  if(bdLocation.getLocType() == BDLocation.TypeNetWorkLocation){
-                currentPosition.append("网络");
-            }
-            mLocationInfo.setText(currentPosition);
+            navigateTo(bdLocation);
+//            StringBuilder currentPosition = new StringBuilder();
+//            currentPosition.append("维度：").append(bdLocation.getLatitude()).append("\n");
+//            currentPosition.append("经度：").append(bdLocation.getLongitude()).append("\n");
+//            currentPosition.append("国家：").append(bdLocation.getCountry()).append("\n");
+//            currentPosition.append("省：").append(bdLocation.getProvince()).append("\n");
+//            currentPosition.append("市：").append(bdLocation.getCity()).append("\n");
+//            currentPosition.append("区：").append(bdLocation.getDistrict()).append("\n");
+//            currentPosition.append("村镇：").append(bdLocation.getTown()).append("\n");
+//            currentPosition.append("村道：").append(bdLocation.getStreet()).append("\n");
+//            currentPosition.append("地址：").append(bdLocation.getAddrStr()).append("\n");
+//            currentPosition.append("定位方式：");
+//            if (bdLocation.getLocType() == BDLocation.TypeCacheLocation){
+//                currentPosition.append("GPS");
+//            }else  if(bdLocation.getLocType() == BDLocation.TypeNetWorkLocation){
+//                currentPosition.append("网络");
+//            }
+//            mLocationInfo.setText(currentPosition);
+
+
         }
     }
+    private void navigateTo(BDLocation bdLocation){
+        if (isFirstLocation) {
+            LatLng latLng = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
+            MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(latLng);
+            baiduMap.animateMapStatus(update);
 
+            //设置大小
+            update = MapStatusUpdateFactory.zoomTo(16f);
+            baiduMap.animateMapStatus(update);
+            isFirstLocation =false;
+        }
+
+        //显示自己位置的图标
+        MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
+        locationBuilder.longitude(bdLocation.getLongitude());
+        locationBuilder.latitude(bdLocation.getLatitude());
+        MyLocationData locationData = locationBuilder.build();
+        baiduMap.setMyLocationData(locationData);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+        baiduMap.setMyLocationEnabled(false);
+        locationClient.stop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
 }
