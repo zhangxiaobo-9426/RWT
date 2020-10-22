@@ -19,5 +19,14 @@
         android:id="@+id/myFragment"
         android:name="com.example.rwt.ui.my.MyFragment"
         android:label="@string/title_my"
-        tools:layout="@layout/my_fragment" />
+        tools:layout="@layout/my_fragment" >
+        <action
+            android:id="@+id/action_myFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.rwt.ui.my.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
 </navigation>

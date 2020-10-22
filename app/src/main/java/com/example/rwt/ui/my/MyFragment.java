@@ -7,10 +7,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.rwt.MainActivity;
 import com.example.rwt.R;
@@ -22,7 +24,6 @@ import java.util.List;
 public class MyFragment extends Fragment {
 
     private MyViewModel mViewModel;
-
     public static MyFragment newInstance() {
         return new MyFragment();
     }
@@ -39,6 +40,14 @@ public class MyFragment extends Fragment {
         mViewModel = ViewModelProviders.of(this).get(MyViewModel.class);
         // TODO: Use the ViewModel
         initView();
+
+        final ImageView imageView = getView().findViewById(R.id.img_setting);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_myFragment_to_settingFragment);
+            }
+        });
     }
     public void initView(){
         Banner banner = null;
