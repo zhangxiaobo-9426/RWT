@@ -74,7 +74,8 @@ public class VicinityFragment extends Fragment {
        mapView = view.findViewById(R.id.bmapView);
        baiduMap = mapView.getMap();
 
-       baiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);
+       //显示的地图样式
+       baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
 
        //可以定位自己的位置
         baiduMap.setMyLocationEnabled(true);
