@@ -14,6 +14,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +35,7 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.example.rwt.R;
+import com.example.rwt.ui.vicinity.entity.VicinityCar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,9 @@ public class VicinityFragment extends Fragment {
     private MapView mapView;
     private BaiduMap baiduMap =null;
     private boolean isFirstLocation =true;
+
+    private RecyclerView recyclerView;
+    private VicinityAdapter adapter;
 
     public static VicinityFragment newInstance() {
         return new VicinityFragment();
@@ -99,8 +105,39 @@ public class VicinityFragment extends Fragment {
             requestLocation();
         }
 
+
+        recyclerView = view.findViewById(R.id.recyclerView);
+        // 第一步：指定布局管理器
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(manager);
+        // 第二步：设置适配器
+        adapter = new VicinityAdapter(R.layout.vicinity_item);
+        recyclerView.setAdapter(adapter);
+
+        loadData();
+
+
     }
 
+    private void loadData(){
+        List<VicinityCar> list = new ArrayList<>();
+        /**
+         *     private int id;
+         *     private String carcolor_url;
+         *     private String title;
+         *     private String distance;
+         *     private String time;
+         *     private String location;
+         * **/
+        list.add(new VicinityCar(1,"http:cacs","贵安新区","425米","3分钟","思雅路"));
+        list.add(new VicinityCar(2,"http:cacs","贵安新区","425米","3分钟","思雅路"));
+        list.add(new VicinityCar(3,"http:cacs","贵安新区","425米","3分钟","思雅路"));
+        list.add(new VicinityCar(4,"http:cacs","贵安新区","425米","3分钟","思雅路"));
+        list.add(new VicinityCar(5,"http:cacs","贵安新区","425米","3分钟","思雅路"));
+        list.add(new VicinityCar(6,"http:cacs","贵安新区","425米","3分钟","思雅路"));
+
+        adapter.setNewInstance(list);
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
