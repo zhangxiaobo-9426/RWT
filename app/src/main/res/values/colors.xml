@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#2E2E99</color>
+    <color name="colorPrimaryDark">#2E2E99</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorNavigationTop">#1196EE</color>
+    <color name="colorMyActivity">#DBEAF4</color>
+    <color name="colorMyActivityBorder">#AEB1B3</color>
+    <color name="colorBlack">#0E0D0D</color>
+    <color name="colorBlue">#2E2E99</color>
 </resources>

@@ -1,7 +1,27 @@
 <resources>
     <string name="app_name">任我停</string>
+    <string name="app_version">1.0.0</string>
     <string name="title_my">我的</string>
     <string name="title_reservation">预约停车</string>
     <string name="title_vicinity">附近停车</string>
-    <string name="app_version">V1.0.0</string>
+    <string name="my_img">my_img</string>
+    <string name="my_phone">180****8631</string>
+    <string name="my_activity">活动</string>
+    <string name="my_activity_detail">查看世间百态</string>
+    <string name="my_head">头像</string>
+    <string name="my_red">红包</string>
+    <string name="my_discount">优惠</string>
+    <string name="my_discount_detail">领取千万奖金</string>
+    <string name="my_order">我的订单</string>
+    <string name="my_all_order">查看全部订单</string>
+    <string name="my_waited_pay">待付款</string>
+    <string name="my_doing">进行中</string>
+    <string name="my_cancel">已取消</string>
+    <string name="my_success">已完成</string>
+    <string name="my_app_setting">应用设置</string>
+    <string name="my_security">账号与安全</string>
+    <string name="my_chat">客服</string>
+    <string name="my_setting">设置</string>
+    <string name="my_advertise">广告</string>
+    <string name="my_more">更多</string>
 </resources>
