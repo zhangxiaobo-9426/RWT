@@ -10,7 +10,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-//        dataBinding {enabled true}
+        dataBinding {
+            enabled true
+        }
     }
     buildTypes {
         release {
@@ -18,15 +20,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets{
-        main{
+    sourceSets {
+        main {
             jniLibs.srcDir 'libs'
             jni.srcDirs = []    //disable automatic ndk-build
         }
     }
     configurations {
         cleanedAnnotations
-        compile.exclude group: 'org.jetbrains' , module:'annotations'
+        compile.exclude group: 'org.jetbrains', module: 'annotations'
     }
 
 }
@@ -43,5 +45,6 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.2.0'
     implementation 'androidx.navigation:navigation-ui:2.3.1'
 
+    implementation 'com.youth.banner:banner:1.4.10'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
 }

@@ -13,6 +13,7 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.example.rwt.databinding.MyFragmentBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
     public static class ImageLoadBanner extends ImageLoader{
 
         @Override

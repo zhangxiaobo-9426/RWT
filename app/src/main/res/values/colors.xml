@@ -5,7 +5,10 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorNavigationTop">#1196EE</color>
     <color name="colorMyActivity">#DBEAF4</color>
-    <color name="colorMyActivityBorder">#AEB1B3</color>
+    <color name="colorMyActivityBorder">#DDDADADF</color>
     <color name="colorBlack">#0E0D0D</color>
     <color name="colorBlue">#2E2E99</color>
+    <color name="colorGray">#DDEAEAEE</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorLightBlue">#298DF8</color>
 </resources>

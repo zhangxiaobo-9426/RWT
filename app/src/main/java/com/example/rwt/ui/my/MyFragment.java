@@ -1,5 +1,6 @@
 package com.example.rwt.ui.my;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 
 import com.example.rwt.MainActivity;
 import com.example.rwt.R;
+import com.example.rwt.databinding.MyFragmentBinding;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import java.util.List;
 public class MyFragment extends Fragment {
 
     private MyViewModel mViewModel;
+    MyFragmentBinding binding;
     public static MyFragment newInstance() {
         return new MyFragment();
     }
@@ -31,7 +34,9 @@ public class MyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.my_fragment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.my_fragment,container,false);
+
+        return binding.getRoot();
     }
 
     @Override
@@ -39,19 +44,30 @@ public class MyFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(MyViewModel.class);
         // TODO: Use the ViewModel
-        initView();
 
-        final ImageView imageView = getView().findViewById(R.id.img_setting);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        binding.itemSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(view).navigate(R.id.action_myFragment_to_settingFragment);
             }
         });
+        binding.itemChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_myFragment_to_chatFragment);
+            }
+        });
+        binding.itemSecurity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_myFragment_to_securityFragment);
+            }
+        });
+        initView();
     }
     public void initView(){
         Banner banner = null;
-        banner = getView().findViewById(R.id.my_banner);
+        banner = binding.myBanner;
         //放图片地址的集合
         List<Integer> list_path = new ArrayList<>();
         list_path.add(R.drawable.my_advertise);

@@ -23,10 +23,26 @@
         <action
             android:id="@+id/action_myFragment_to_settingFragment"
             app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_myFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_myFragment_to_securityFragment"
+            app:destination="@id/securityFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.example.rwt.ui.my.setting.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.rwt.ui.my.setting.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/securityFragment"
+        android:name="com.example.rwt.ui.my.setting.SecurityFragment"
+        android:label="fragment_security"
+        tools:layout="@layout/fragment_security" />
 </navigation>
