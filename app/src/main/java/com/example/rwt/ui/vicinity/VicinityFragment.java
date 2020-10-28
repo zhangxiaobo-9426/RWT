@@ -123,7 +123,7 @@ public class VicinityFragment extends Fragment {
         loadDatahttp();
 
     }
-
+    //网络加载
     private void loadDatahttp(){
         // 获取Retrofit对象
         RetrofitFactory.getRetrofit().create(ApiDemo.class)
@@ -150,9 +150,11 @@ public class VicinityFragment extends Fragment {
                             }
                         });
     }
+
+    //本地加载
     private void loadData(){
         List<VicinityCar> list = new ArrayList<>();
-        /**
+        /*
          *     private int id;
          *     private String carcolor_url;
          *     private String title;
