@@ -90,7 +90,7 @@ public class VicinityFragment extends Fragment {
         baiduMap.setMyLocationEnabled(true);
 
 
-
+        //动态申请权限
         List<String> permissionList = new ArrayList<>();
         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
             permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
@@ -171,6 +171,8 @@ public class VicinityFragment extends Fragment {
 
         adapter.setNewInstance(list);
     }
+
+    //判断用户是否同意全部请求的权限
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
@@ -196,10 +198,11 @@ public class VicinityFragment extends Fragment {
         initLocation();
         locationClient.start();
     }
+    //初始化定位
     private void initLocation(){
         LocationClientOption option =new LocationClientOption();
 
-        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+                option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         //可选，设置定位模式，默认高精度
         //LocationMode.Hight_Accuracy：高精度；
         //LocationMode. Battery_Saving：低功耗；
@@ -224,7 +227,7 @@ public class VicinityFragment extends Fragment {
                 option.setLocationNotify(true);
         //可选，设置是否当GPS有效时按照1S/1次频率输出GPS结果，默认false
 
-                option.setIgnoreKillProcess(false);
+                option.setIgnoreKillProcess(true);
         //可选，定位SDK内部是一个service，并放到了独立进程。
         //设置是否在stop的时候杀死这个进程，默认（建议）不杀死，即setIgnoreKillProcess(true)
 
@@ -242,6 +245,7 @@ public class VicinityFragment extends Fragment {
         //可选，设置是否需要最新版本的地址信息。默认需要，即参数为true
 
                 option.setIsNeedAddress(true);
+        //是否获取地理信息
 
                 locationClient.setLocOption(option);
         //mLocationClient为第二步初始化过的LocationClient对象
@@ -253,6 +257,7 @@ public class VicinityFragment extends Fragment {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
             navigateTo(bdLocation);
+
 //            StringBuilder currentPosition = new StringBuilder();
 //            currentPosition.append("维度：").append(bdLocation.getLatitude()).append("\n");
 //            currentPosition.append("经度：").append(bdLocation.getLongitude()).append("\n");
@@ -274,9 +279,12 @@ public class VicinityFragment extends Fragment {
 
         }
     }
+    //显示自己的当前位置
     private void navigateTo(BDLocation bdLocation){
         if (isFirstLocation) {
+            //获取经纬度
             LatLng latLng = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
+            //更新地图
             MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(latLng);
             baiduMap.animateMapStatus(update);
 
@@ -286,7 +294,7 @@ public class VicinityFragment extends Fragment {
             isFirstLocation =false;
         }
 
-        //显示自己位置的图标
+        //标记自己位置的图标
         MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
         locationBuilder.longitude(bdLocation.getLongitude());
         locationBuilder.latitude(bdLocation.getLatitude());
