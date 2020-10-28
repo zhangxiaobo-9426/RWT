@@ -14,6 +14,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -113,6 +114,8 @@ public class VicinityFragment extends Fragment {
         // 第二步：设置适配器
         adapter = new VicinityAdapter(R.layout.vicinity_item);
         recyclerView.setAdapter(adapter);
+        //recyclerView分割线
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
 
         loadData();
 
@@ -129,12 +132,12 @@ public class VicinityFragment extends Fragment {
          *     private String time;
          *     private String location;
          * **/
-        list.add(new VicinityCar(1,"http:cacs","贵安新区","425米","3分钟","思雅路"));
-        list.add(new VicinityCar(2,"http:cacs","贵安新区","425米","3分钟","思雅路"));
-        list.add(new VicinityCar(3,"http:cacs","贵安新区","425米","3分钟","思雅路"));
-        list.add(new VicinityCar(4,"http:cacs","贵安新区","425米","3分钟","思雅路"));
-        list.add(new VicinityCar(5,"http:cacs","贵安新区","425米","3分钟","思雅路"));
-        list.add(new VicinityCar(6,"http:cacs","贵安新区","425米","3分钟","思雅路"));
+        list.add(new VicinityCar(1,"h","贵安新区","425米","3分钟","思雅路"));
+        list.add(new VicinityCar(2,"t","贵安新区","425米","3分钟","思雅路"));
+        list.add(new VicinityCar(3,"t","贵安新区","425米","3分钟","思雅路"));
+        list.add(new VicinityCar(4,"p","贵安新区","425米","3分钟","思雅路"));
+        list.add(new VicinityCar(5,"s","贵安新区","425米","3分钟","思雅路"));
+        list.add(new VicinityCar(6,"s","贵安新区","425米","3分钟","思雅路"));
 
         adapter.setNewInstance(list);
     }
