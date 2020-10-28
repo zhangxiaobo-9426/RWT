@@ -245,7 +245,8 @@ public class VicinityFragment extends Fragment {
         //可选，设置是否需要最新版本的地址信息。默认需要，即参数为true
 
                 option.setIsNeedAddress(true);
-        //是否获取地理信息
+        //可选，是否需要地址信息，默认为不需要，即参数为false
+        //如果开发者需要获得当前点的地址信息，此处必须为true
 
                 locationClient.setLocOption(option);
         //mLocationClient为第二步初始化过的LocationClient对象
