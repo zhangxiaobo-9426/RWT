@@ -5,10 +5,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
-import android.app.Application;
-import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,7 +25,6 @@ import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -36,10 +32,16 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.example.rwt.R;
+import com.example.rwt.ui.network.ApiDemo;
+import com.example.rwt.ui.network.RetrofitFactory;
 import com.example.rwt.ui.vicinity.entity.VicinityCar;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class VicinityFragment extends Fragment {
 
@@ -117,11 +119,37 @@ public class VicinityFragment extends Fragment {
         //recyclerView分割线
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
 
-        loadData();
-
+//        loadData();
+        loadDatahttp();
 
     }
 
+    private void loadDatahttp(){
+        // 获取Retrofit对象
+        RetrofitFactory.getRetrofit().create(ApiDemo.class)
+                .getCar()
+                // 切换到IO现场执行网络请求
+                .subscribeOn(Schedulers.io())
+                // 切换到UI线程执行UI操作
+                .observeOn(AndroidSchedulers.mainThread())
+                // 获取网络请求结果
+                .subscribe(new Consumer<List<VicinityCar>>()
+                           {
+                               @Override
+                               public void accept(List<VicinityCar> repos) throws Exception
+                               {
+
+                                   adapter.addData(repos);
+                               }
+                           },
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception
+                            {
+                                throwable.printStackTrace();
+                            }
+                        });
+    }
     private void loadData(){
         List<VicinityCar> list = new ArrayList<>();
         /**
