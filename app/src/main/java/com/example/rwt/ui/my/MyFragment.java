@@ -40,6 +40,13 @@ public class MyFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // 做初始化操作
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(MyViewModel.class);
@@ -61,11 +68,12 @@ public class MyFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(view).navigate(R.id.action_myFragment_to_securityFragment);
+
             }
         });
-        initView();
+        initBannerView();
     }
-    public void initView(){
+    public void initBannerView(){
         Banner banner = null;
         banner = binding.myBanner;
         //放图片地址的集合

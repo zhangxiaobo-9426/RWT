@@ -37,4 +37,17 @@
     <string name="my_setting_user">用户指南</string>
     <string name="my_setting_us">关于任我停</string>
     <string name="my_setting_exit">退出登录</string>
+
+<!--    security details of mine page-->
+    <string name="my_security_title">账号与安全</string>
+    <string name="my_security_RealName">实名认证</string>
+    <string name="my_security_RealNameStatus">未认证</string>
+    <string name="my_security_SetPwd">设置登录密码</string>
+    <string name="my_security_PwdStatus">去修改</string>
+    <string name="my_security_SetPay">设置支付密码</string>
+    <string name="my_security_PayStatus">未设置</string>
+    <string name="my_security_NoPwd">微信免密支付</string>
+    <string name="my_security_NoPwdStatus">未开启</string>
+    <string name="my_security_NoPwdDetail">开启后，支付时无需输入密码或指纹</string>
+    <string name="my_security_ChangePhone">修改手机号码</string>
 </resources>
