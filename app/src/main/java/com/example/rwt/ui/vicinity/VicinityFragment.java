@@ -45,6 +45,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class VicinityFragment extends Fragment {
 
+    /* 自己的经纬度坐标*/
+
     private VicinityViewModel mViewModel;
     private TextView mLocationInfo;
     private LocationClient locationClient;
@@ -81,6 +83,12 @@ public class VicinityFragment extends Fragment {
        locationClient.registerLocationListener(new MyLocationListener());
 
        mapView = view.findViewById(R.id.bmapView);
+//       //隐藏比例尺按钮
+//       mapView.showScaleControl(false);
+//
+//       //隐藏缩放按钮
+//        mapView.showZoomControls(false);
+
        baiduMap = mapView.getMap();
 
        //显示的地图样式
@@ -248,6 +256,10 @@ public class VicinityFragment extends Fragment {
         //可选，是否需要地址信息，默认为不需要，即参数为false
         //如果开发者需要获得当前点的地址信息，此处必须为true
 
+        option.setIsNeedLocationPoiList(true);
+        //可选，是否需要周边POI信息，默认为不需要，即参数为false
+        //如果开发者需要获得周边POI信息，此处必须为true
+
                 locationClient.setLocOption(option);
         //mLocationClient为第二步初始化过的LocationClient对象
         //需将配置好的LocationClientOption对象，通过setLocOption方法传递给LocationClient对象使用
@@ -283,7 +295,7 @@ public class VicinityFragment extends Fragment {
     //显示自己的当前位置
     private void navigateTo(BDLocation bdLocation){
         if (isFirstLocation) {
-            //获取经纬度
+            //获取纬经度（先设置纬度，在是经度）
             LatLng latLng = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
             //更新地图
             MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(latLng);
