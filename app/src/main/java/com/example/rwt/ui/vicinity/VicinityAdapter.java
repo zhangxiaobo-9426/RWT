@@ -1,5 +1,6 @@
 package com.example.rwt.ui.vicinity;
 
+import android.view.View;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -12,6 +13,11 @@ import org.jetbrains.annotations.NotNull;
 public class VicinityAdapter extends BaseQuickAdapter<VicinityCar, BaseViewHolder> {
     public VicinityAdapter(int layoutResId) {
         super(layoutResId);
+    }
+
+    @Override
+    protected void setOnItemClick(@NotNull View v, int position) {
+        super.setOnItemClick(v, position);
     }
 
     @Override

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +27,16 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MapViewLayoutParams;
+import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.TextOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.example.rwt.R;
 import com.example.rwt.ui.network.ApiDemo;
@@ -46,14 +53,17 @@ import io.reactivex.schedulers.Schedulers;
 public class VicinityFragment extends Fragment {
 
     /* 自己的经纬度坐标*/
-
+    protected LatLng myPos = new LatLng(26.40846,106.632693);
+    protected LatLng IconPos = new LatLng(26.408609,106.633615);
     private VicinityViewModel mViewModel;
     private TextView mLocationInfo;
     private LocationClient locationClient;
     private View view;
+    private View pop;
     private MapView mapView;
     private BaiduMap baiduMap =null;
     private boolean isFirstLocation =true;
+    private TextView tv_title;
 
     private RecyclerView recyclerView;
     private VicinityAdapter adapter;
@@ -298,7 +308,12 @@ public class VicinityFragment extends Fragment {
             //获取纬经度（先设置纬度，在是经度）
             LatLng latLng = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
             //更新地图
-            MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(latLng);
+//            MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(latLng);
+
+            //获取自己的设置的经纬度坐标
+            MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(myPos);
+
+
             baiduMap.animateMapStatus(update);
 
             //设置大小
@@ -314,8 +329,81 @@ public class VicinityFragment extends Fragment {
         MyLocationData locationData = locationBuilder.build();
         baiduMap.setMyLocationData(locationData);
 
+
+        //文字覆盖物
+        TextOptions options=new TextOptions();
+        options.position(myPos).text("我的位置").fontSize(20).fontColor(0X55FF0000);
+        baiduMap.addOverlay(options);
+
+       initMarker();
+
+        //标志建筑物点击事件
+       baiduMap.setOnMarkerClickListener(onMarkerClickListener);
+        //标志建筑物拖动事件
+        baiduMap.setOnMarkerDragListener(onMarkerDragListener);
     }
 
+    //标志拖动监听器
+    BaiduMap.OnMarkerDragListener  onMarkerDragListener = new BaiduMap.OnMarkerDragListener() {
+        //标志正在拖动
+        @Override
+        public void onMarkerDrag(Marker marker) {
+            mapView.updateViewLayout(pop,createLayoutParams(marker.getPosition()));
+        }
+        //标志拖动结束
+        @Override
+        public void onMarkerDragEnd(Marker marker) {
+            mapView.updateViewLayout(pop,createLayoutParams(marker.getPosition()));
+        }
+        //标志开始拖动
+        @Override
+        public void onMarkerDragStart(Marker marker) {
+            mapView.updateViewLayout(pop,createLayoutParams(marker.getPosition()));
+        }
+    };
+    BaiduMap.OnMarkerClickListener onMarkerClickListener =new BaiduMap.OnMarkerClickListener() {
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+            //显示一个停车场的信息 vicinity_pop
+            if (pop == null){
+                pop =View.inflate(getActivity(), R.layout.vicinity_pop,null);
+                tv_title = pop.findViewById(R.id.tv_vicinity_location_title);
+
+                mapView.addView(pop,createLayoutParams(marker.getPosition()));
+            }else {
+                mapView.updateViewLayout(pop,createLayoutParams(marker.getPosition()));
+            }
+            tv_title.setText(marker.getTitle());
+            return true;
+        }
+    };
+
+    /**
+     * 创建一个布局参数
+     * @param position（位置）
+     * @return
+     */
+    private MapViewLayoutParams createLayoutParams(LatLng position){
+        MapViewLayoutParams.Builder builder = new MapViewLayoutParams.Builder();
+        builder.layoutMode(MapViewLayoutParams.ELayoutMode.mapMode); //指定坐标类型为经纬度
+        builder.position(position);  //设置标志位置
+        builder.yOffset(-60);
+        MapViewLayoutParams params = builder.build();
+        return params;
+    }
+    /**
+     * 自定义标志
+     */
+   private void initMarker(){
+       MarkerOptions options1 = new MarkerOptions();
+       BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.vicinity_location_blue);
+       options1.position(IconPos).icon(bitmapDescriptor).draggable(true).title("中间");
+       baiduMap.addOverlay(options1);
+       options1.position(new LatLng(IconPos.latitude + 0.001,IconPos.longitude)).title("上面").icon(bitmapDescriptor).draggable(true);
+       baiduMap.addOverlay(options1);
+       options1.position(new LatLng(IconPos.latitude - 0.001,IconPos.longitude)).title("下面").icon(bitmapDescriptor).draggable(true);
+       baiduMap.addOverlay(options1);
+   }
     @Override
     public void onDestroy() {
         super.onDestroy();
