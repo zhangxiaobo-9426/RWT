@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +40,18 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.TextOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.model.LatLngBounds;
+import com.baidu.mapapi.overlayutil.PoiOverlay;
+import com.baidu.mapapi.search.core.PoiInfo;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
+import com.baidu.mapapi.search.poi.PoiBoundSearchOption;
+import com.baidu.mapapi.search.poi.PoiCitySearchOption;
+import com.baidu.mapapi.search.poi.PoiDetailResult;
+import com.baidu.mapapi.search.poi.PoiDetailSearchResult;
+import com.baidu.mapapi.search.poi.PoiIndoorResult;
+import com.baidu.mapapi.search.poi.PoiResult;
+import com.baidu.mapapi.search.poi.PoiSearch;
 import com.example.rwt.R;
 import com.example.rwt.ui.network.ApiDemo;
 import com.example.rwt.ui.network.RetrofitFactory;
@@ -50,21 +64,36 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class VicinityFragment extends Fragment {
+public class VicinityFragment extends Fragment implements OnGetPoiSearchResultListener {
+//public class VicinityFragment extends Fragment {
+    private View view;
+    //用于获取自己的信息
+    private TextView mLocationInfo;
+
+    //获取地图和地图控件
+    private MapView mapView;
+    private BaiduMap baiduMap =null;
+    private LocationClient locationClient;
+    //是否是第一次获取位置信息
+    private boolean isFirstLocation =true;
+    private ImageView zoom_in,zoom_out;
+
+
+    private VicinityViewModel mViewModel;
+
+    //显示覆盖物的文字
+    private TextView tv_title;
+    private View pop;
 
     /* 自己的经纬度坐标*/
     protected LatLng myPos = new LatLng(26.40846,106.632693);
     protected LatLng IconPos = new LatLng(26.408609,106.633615);
-    private VicinityViewModel mViewModel;
-    private TextView mLocationInfo;
-    private LocationClient locationClient;
-    private View view;
-    private View pop;
-    private MapView mapView;
-    private BaiduMap baiduMap =null;
-    private boolean isFirstLocation =true;
-    private TextView tv_title;
 
+    //poi附近搜索
+    private PoiSearch poiSearch = null;
+    private PoiOverlay poiOverlay;
+
+    //用于显示列表
     private RecyclerView recyclerView;
     private VicinityAdapter adapter;
 
@@ -82,12 +111,24 @@ public class VicinityFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-//        SDKInitializer.initialize(getActivity().getApplicationContext());
-
         mViewModel = ViewModelProviders.of(this).get(VicinityViewModel.class);
         // TODO: Use the ViewModel
-
+        /*-----------------缩小------------------------*/
+        zoom_in = view.findViewById(R.id.zoom_in);
+        zoom_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setZoomIn(view);
+            }
+        });
+        /*-----------------放大------------------------*/
+        zoom_out= view.findViewById(R.id.zoom_out);
+        zoom_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setZoomOut(view);
+            }
+        });
        mLocationInfo =view.findViewById(R.id.mLocationInfo);
        locationClient = new LocationClient(getContext());
        locationClient.registerLocationListener(new MyLocationListener());
@@ -95,14 +136,21 @@ public class VicinityFragment extends Fragment {
        mapView = view.findViewById(R.id.bmapView);
 //       //隐藏比例尺按钮
 //       mapView.showScaleControl(false);
-//
-//       //隐藏缩放按钮
-//        mapView.showZoomControls(false);
+       //隐藏缩放按钮
+        mapView.showZoomControls(false);
+        //设置比例尺位置
+//        mapView.setScaleControlPosition(new Point(0,0));
+        //设置缩放位置
+//        mapView.setZoomControlsPosition(new Point(0,0));
 
        baiduMap = mapView.getMap();
 
        //显示的地图样式
        baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+       //设置是否显示交通图
+       baiduMap.setTrafficEnabled(true);
+//       //设置是否显示热力图
+//       baiduMap.setBaiduHeatMapEnabled(true);
 
        //可以定位自己的位置
         baiduMap.setMyLocationEnabled(true);
@@ -340,8 +388,77 @@ public class VicinityFragment extends Fragment {
         //标志建筑物点击事件
        baiduMap.setOnMarkerClickListener(onMarkerClickListener);
         //标志建筑物拖动事件
-        baiduMap.setOnMarkerDragListener(onMarkerDragListener);
+       baiduMap.setOnMarkerDragListener(onMarkerDragListener);
+
+
+        poiSearch = PoiSearch.newInstance();
+        poiSearch.setOnGetPoiSearchResultListener(this);
+//
+//        poiOverlay = new PoiOverlay(baiduMap){
+//            @Override
+//            public boolean onPoiClick(int i) {
+//                PoiInfo poiInfo=getPoiResult().getAllPoi().get(i);
+//                Toast.makeText(getContext(),poiInfo.name + ","+ poiInfo.address, Toast.LENGTH_SHORT).show();
+//                return true;
+//            }
+//        };
+//        baiduMap.setOnMarkerClickListener(poiOverlay);
+//        // poiSearch.searchInBound(getSearchInBoundParams());
+//        poiSearch.searchInCity(getSearchInCityParams());
+
     }
+//    //城市搜索
+//    private PoiCitySearchOption getSearchInCityParams(){
+//        PoiCitySearchOption poiCitySearchOption = new PoiCitySearchOption();
+//        poiCitySearchOption.city("贵阳市").keyword("加油站").pageNum(4);
+//        return poiCitySearchOption;
+//    }
+//    //周边搜索
+//    private PoiBoundSearchOption getSearchInBoundParams(){
+//        PoiBoundSearchOption poiBoundSearchOption =new PoiBoundSearchOption();
+//        /*106.630983,26.405209
+//        106.636043,26.410937
+//         * 西南 106.631844,26.406081
+//         * 东北 106.63497,26.409575
+//         * 两个点之间围成的矩形
+//         */
+//        LatLngBounds latLngBounds = new LatLngBounds.Builder()
+//                .include(new LatLng(26.405209,106.630983))
+//                .include(new LatLng(26.410937,106.636043)).build();
+//
+//        poiBoundSearchOption.bound(latLngBounds); // 指定搜索范围
+//        poiBoundSearchOption.keyword("加油站");  //指定搜索内容
+//        return poiBoundSearchOption;
+//    }
+    //获取兴趣点信息
+    @Override
+    public void onGetPoiResult(PoiResult poiResult) {
+//        //不等于没有错误，就是有错误（后期可以更详细判断错误类型）
+//        if (poiResult == null && poiResult.error != SearchResult.ERRORNO.NO_ERROR){
+//            Toast.makeText(getContext(), "没有检索到结果", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        poiOverlay.setData(poiResult);  //把数据设置给覆盖物
+//        poiOverlay.addToMap(); //把所有数据变成覆盖物添加到BaiduMap
+//        poiOverlay.zoomToSpan(); //把所有搜索结果在一个屏幕内显示出来
+    }
+    //获取兴趣点详情信息0
+    @Override
+    public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
+    }
+
+    @Override
+    public void onGetPoiDetailResult(PoiDetailSearchResult poiDetailSearchResult) {
+
+    }
+
+    @Override
+    public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
+
+    }
+
+
+
 
     //标志拖动监听器
     BaiduMap.OnMarkerDragListener  onMarkerDragListener = new BaiduMap.OnMarkerDragListener() {
@@ -387,7 +504,7 @@ public class VicinityFragment extends Fragment {
         MapViewLayoutParams.Builder builder = new MapViewLayoutParams.Builder();
         builder.layoutMode(MapViewLayoutParams.ELayoutMode.mapMode); //指定坐标类型为经纬度
         builder.position(position);  //设置标志位置
-        builder.yOffset(-60);
+        builder.yOffset(-65);
         MapViewLayoutParams params = builder.build();
         return params;
     }
@@ -404,23 +521,40 @@ public class VicinityFragment extends Fragment {
        options1.position(new LatLng(IconPos.latitude - 0.001,IconPos.longitude)).title("下面").icon(bitmapDescriptor).draggable(true);
        baiduMap.addOverlay(options1);
    }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-        baiduMap.setMyLocationEnabled(false);
-        locationClient.stop();
+    /**
+     * 放大地图缩放级别
+     *
+     * @param v
+     */
+    public void setZoomIn(View v) {
+        baiduMap.setMapStatus(MapStatusUpdateFactory.zoomIn());
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mapView.onResume();
+    /**
+     * 缩小地图缩放级别
+     *
+     * @param v
+     */
+    public void setZoomOut(View v) {
+        baiduMap.setMapStatus(MapStatusUpdateFactory.zoomOut());
     }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mapView.onPause();
-    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        locationClient.stop();
+//        baiduMap.setMyLocationEnabled(false);
+//        mapView.onDestroy();
+//    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        mapView.onResume();
+//    }
+//
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        mapView.onPause();
+//    }
 }
