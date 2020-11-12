@@ -8,7 +8,13 @@
     <color name="colorMyActivityBorder">#DDDADADF</color>
     <color name="colorBlack">#0E0D0D</color>
     <color name="colorBlue">#2E2E99</color>
+<<<<<<< HEAD
     <color name="colorGray">#DDEAEAEE</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorLightBlue">#298DF8</color>
+=======
+    <color name="dkgray">#FF444444</color>
+    <color name="weatherInfo">#BD444444</color>
+    <color name="white">#FFFFFF</color>
+>>>>>>> temp
 </resources>

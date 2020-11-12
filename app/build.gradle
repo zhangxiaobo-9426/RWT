@@ -10,8 +10,15 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+<<<<<<< HEAD
         dataBinding {
             enabled true
+=======
+//        dataBinding {enabled true}
+        compileOptions {//就算您使用 AndroidStuido v3.0, 也需要配置以下参数
+            targetCompatibility JavaVersion.VERSION_1_8
+            sourceCompatibility JavaVersion.VERSION_1_8
+>>>>>>> temp
         }
     }
     buildTypes {
@@ -47,4 +54,26 @@ dependencies {
 
     implementation 'com.youth.banner:banner:1.4.10'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+
+    implementation 'com.youth.banner:banner:1.4.10'
+
+
+    // retrofit 2
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+
+    // okhttp 3
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    debugImplementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+
+    // RxJava 2
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.12'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+
+    //加载网络图片
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+
 }

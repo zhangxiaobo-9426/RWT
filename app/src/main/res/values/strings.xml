@@ -25,6 +25,7 @@
     <string name="my_advertise">广告</string>
     <string name="my_more">更多</string>
 
+<<<<<<< HEAD
 <!--    setting details of mine page-->
     <string name="my_setting_title">设置</string>
     <string name="my_setting_address">常用地址</string>
@@ -50,4 +51,10 @@
     <string name="my_security_NoPwdStatus">未开启</string>
     <string name="my_security_NoPwdDetail">开启后，支付时无需输入密码或指纹</string>
     <string name="my_security_ChangePhone">修改手机号码</string>
+=======
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="vicinty_et_top">百万补贴优惠劵等您来体验</string>
+    <string name="viniity_tip_wenzhi">left || </string>
+>>>>>>> temp
 </resources>

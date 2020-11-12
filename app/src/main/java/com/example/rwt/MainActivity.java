@@ -1,10 +1,15 @@
 package com.example.rwt;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+<<<<<<< HEAD
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -17,16 +22,12 @@ import android.widget.ImageView;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.example.rwt.databinding.MyFragmentBinding;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.Transformer;
-import com.youth.banner.listener.OnBannerListener;
-import com.youth.banner.loader.ImageLoader;
-import com.youth.banner.loader.ImageLoaderInterface;
+=======
+import androidx.navigation.ui.NavigationUI;
 
-import java.util.ArrayList;
-import java.util.List;
+>>>>>>> temp
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.youth.banner.loader.ImageLoader;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SDKInitializer.initialize(getApplicationContext());
+//        SDKInitializer.initialize(getApplicationContext());
 
         setContentView(R.layout.activity_main);
 

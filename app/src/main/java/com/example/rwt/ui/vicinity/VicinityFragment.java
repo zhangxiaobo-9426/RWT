@@ -5,21 +5,22 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
-import android.app.Application;
-import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Location;
+import android.graphics.Point;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,29 +28,72 @@ import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MapViewLayoutParams;
+import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.TextOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.model.LatLngBounds;
+import com.baidu.mapapi.overlayutil.PoiOverlay;
+import com.baidu.mapapi.search.core.PoiInfo;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
+import com.baidu.mapapi.search.poi.PoiBoundSearchOption;
+import com.baidu.mapapi.search.poi.PoiCitySearchOption;
+import com.baidu.mapapi.search.poi.PoiDetailResult;
+import com.baidu.mapapi.search.poi.PoiDetailSearchResult;
+import com.baidu.mapapi.search.poi.PoiIndoorResult;
+import com.baidu.mapapi.search.poi.PoiResult;
+import com.baidu.mapapi.search.poi.PoiSearch;
 import com.example.rwt.R;
+import com.example.rwt.ui.network.ApiDemo;
+import com.example.rwt.ui.network.RetrofitFactory;
 import com.example.rwt.ui.vicinity.entity.VicinityCar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class VicinityFragment extends Fragment {
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
-    private VicinityViewModel mViewModel;
-    private TextView mLocationInfo;
-    private LocationClient locationClient;
+public class VicinityFragment extends Fragment implements OnGetPoiSearchResultListener {
+//public class VicinityFragment extends Fragment {
     private View view;
+    //用于获取自己的信息
+    private TextView mLocationInfo;
+
+    //获取地图和地图控件
     private MapView mapView;
     private BaiduMap baiduMap =null;
+    private LocationClient locationClient;
+    //是否是第一次获取位置信息
     private boolean isFirstLocation =true;
+    private ImageView zoom_in,zoom_out;
 
+
+    private VicinityViewModel mViewModel;
+
+    //显示覆盖物的文字
+    private TextView tv_title;
+    private View pop;
+
+    /* 自己的经纬度坐标*/
+    protected LatLng myPos = new LatLng(26.40846,106.632693);
+    protected LatLng IconPos = new LatLng(26.408609,106.633615);
+
+    //poi附近搜索
+    private PoiSearch poiSearch = null;
+    private PoiOverlay poiOverlay;
+
+    //用于显示列表
     private RecyclerView recyclerView;
     private VicinityAdapter adapter;
 
@@ -67,27 +111,52 @@ public class VicinityFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-//        SDKInitializer.initialize(getActivity().getApplicationContext());
-
         mViewModel = ViewModelProviders.of(this).get(VicinityViewModel.class);
         // TODO: Use the ViewModel
-
+        /*-----------------缩小------------------------*/
+        zoom_in = view.findViewById(R.id.zoom_in);
+        zoom_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setZoomIn(view);
+            }
+        });
+        /*-----------------放大------------------------*/
+        zoom_out= view.findViewById(R.id.zoom_out);
+        zoom_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setZoomOut(view);
+            }
+        });
        mLocationInfo =view.findViewById(R.id.mLocationInfo);
        locationClient = new LocationClient(getContext());
        locationClient.registerLocationListener(new MyLocationListener());
 
        mapView = view.findViewById(R.id.bmapView);
+//       //隐藏比例尺按钮
+//       mapView.showScaleControl(false);
+       //隐藏缩放按钮
+        mapView.showZoomControls(false);
+        //设置比例尺位置
+//        mapView.setScaleControlPosition(new Point(0,0));
+        //设置缩放位置
+//        mapView.setZoomControlsPosition(new Point(0,0));
+
        baiduMap = mapView.getMap();
 
        //显示的地图样式
        baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+       //设置是否显示交通图
+       baiduMap.setTrafficEnabled(true);
+//       //设置是否显示热力图
+//       baiduMap.setBaiduHeatMapEnabled(true);
 
        //可以定位自己的位置
         baiduMap.setMyLocationEnabled(true);
 
 
-
+        //动态申请权限
         List<String> permissionList = new ArrayList<>();
         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
             permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
@@ -113,15 +182,45 @@ public class VicinityFragment extends Fragment {
         // 第二步：设置适配器
         adapter = new VicinityAdapter(R.layout.vicinity_item);
         recyclerView.setAdapter(adapter);
+        //recyclerView分割线
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
 
-        loadData();
-
+//        loadData();
+        loadDatahttp();
 
     }
+    //网络加载
+    private void loadDatahttp(){
+        // 获取Retrofit对象
+        RetrofitFactory.getRetrofit().create(ApiDemo.class)
+                .getCar()
+                // 切换到IO现场执行网络请求
+                .subscribeOn(Schedulers.io())
+                // 切换到UI线程执行UI操作
+                .observeOn(AndroidSchedulers.mainThread())
+                // 获取网络请求结果
+                .subscribe(new Consumer<List<VicinityCar>>()
+                           {
+                               @Override
+                               public void accept(List<VicinityCar> repos) throws Exception
+                               {
 
+                                   adapter.addData(repos);
+                               }
+                           },
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception
+                            {
+                                throwable.printStackTrace();
+                            }
+                        });
+    }
+
+    //本地加载
     private void loadData(){
         List<VicinityCar> list = new ArrayList<>();
-        /**
+        /*
          *     private int id;
          *     private String carcolor_url;
          *     private String title;
@@ -129,15 +228,17 @@ public class VicinityFragment extends Fragment {
          *     private String time;
          *     private String location;
          * **/
-        list.add(new VicinityCar(1,"http:cacs","贵安新区","425米","3分钟","思雅路"));
-        list.add(new VicinityCar(2,"http:cacs","贵安新区","425米","3分钟","思雅路"));
-        list.add(new VicinityCar(3,"http:cacs","贵安新区","425米","3分钟","思雅路"));
-        list.add(new VicinityCar(4,"http:cacs","贵安新区","425米","3分钟","思雅路"));
-        list.add(new VicinityCar(5,"http:cacs","贵安新区","425米","3分钟","思雅路"));
-        list.add(new VicinityCar(6,"http:cacs","贵安新区","425米","3分钟","思雅路"));
+        list.add(new VicinityCar(1,"h","贵安新区","425米","3分钟","思雅路"));
+        list.add(new VicinityCar(2,"t","贵安新区","425米","3分钟","思雅路"));
+        list.add(new VicinityCar(3,"t","贵安新区","425米","3分钟","思雅路"));
+        list.add(new VicinityCar(4,"p","贵安新区","425米","3分钟","思雅路"));
+        list.add(new VicinityCar(5,"s","贵安新区","425米","3分钟","思雅路"));
+        list.add(new VicinityCar(6,"s","贵安新区","425米","3分钟","思雅路"));
 
         adapter.setNewInstance(list);
     }
+
+    //判断用户是否同意全部请求的权限
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
@@ -163,10 +264,11 @@ public class VicinityFragment extends Fragment {
         initLocation();
         locationClient.start();
     }
+    //初始化定位
     private void initLocation(){
         LocationClientOption option =new LocationClientOption();
 
-        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+                option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         //可选，设置定位模式，默认高精度
         //LocationMode.Hight_Accuracy：高精度；
         //LocationMode. Battery_Saving：低功耗；
@@ -191,7 +293,7 @@ public class VicinityFragment extends Fragment {
                 option.setLocationNotify(true);
         //可选，设置是否当GPS有效时按照1S/1次频率输出GPS结果，默认false
 
-                option.setIgnoreKillProcess(false);
+                option.setIgnoreKillProcess(true);
         //可选，定位SDK内部是一个service，并放到了独立进程。
         //设置是否在stop的时候杀死这个进程，默认（建议）不杀死，即setIgnoreKillProcess(true)
 
@@ -209,6 +311,12 @@ public class VicinityFragment extends Fragment {
         //可选，设置是否需要最新版本的地址信息。默认需要，即参数为true
 
                 option.setIsNeedAddress(true);
+        //可选，是否需要地址信息，默认为不需要，即参数为false
+        //如果开发者需要获得当前点的地址信息，此处必须为true
+
+        option.setIsNeedLocationPoiList(true);
+        //可选，是否需要周边POI信息，默认为不需要，即参数为false
+        //如果开发者需要获得周边POI信息，此处必须为true
 
                 locationClient.setLocOption(option);
         //mLocationClient为第二步初始化过的LocationClient对象
@@ -220,6 +328,7 @@ public class VicinityFragment extends Fragment {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
             navigateTo(bdLocation);
+
 //            StringBuilder currentPosition = new StringBuilder();
 //            currentPosition.append("维度：").append(bdLocation.getLatitude()).append("\n");
 //            currentPosition.append("经度：").append(bdLocation.getLongitude()).append("\n");
@@ -241,10 +350,18 @@ public class VicinityFragment extends Fragment {
 
         }
     }
+    //显示自己的当前位置
     private void navigateTo(BDLocation bdLocation){
         if (isFirstLocation) {
+            //获取纬经度（先设置纬度，在是经度）
             LatLng latLng = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
-            MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(latLng);
+            //更新地图
+//            MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(latLng);
+
+            //获取自己的设置的经纬度坐标
+            MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(myPos);
+
+
             baiduMap.animateMapStatus(update);
 
             //设置大小
@@ -253,32 +370,191 @@ public class VicinityFragment extends Fragment {
             isFirstLocation =false;
         }
 
-        //显示自己位置的图标
+        //标记自己位置的图标
         MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
         locationBuilder.longitude(bdLocation.getLongitude());
         locationBuilder.latitude(bdLocation.getLatitude());
         MyLocationData locationData = locationBuilder.build();
         baiduMap.setMyLocationData(locationData);
 
+
+        //文字覆盖物
+        TextOptions options=new TextOptions();
+        options.position(myPos).text("我的位置").fontSize(20).fontColor(0X55FF0000);
+        baiduMap.addOverlay(options);
+
+       initMarker();
+
+        //标志建筑物点击事件
+       baiduMap.setOnMarkerClickListener(onMarkerClickListener);
+        //标志建筑物拖动事件
+       baiduMap.setOnMarkerDragListener(onMarkerDragListener);
+
+
+        poiSearch = PoiSearch.newInstance();
+        poiSearch.setOnGetPoiSearchResultListener(this);
+//
+//        poiOverlay = new PoiOverlay(baiduMap){
+//            @Override
+//            public boolean onPoiClick(int i) {
+//                PoiInfo poiInfo=getPoiResult().getAllPoi().get(i);
+//                Toast.makeText(getContext(),poiInfo.name + ","+ poiInfo.address, Toast.LENGTH_SHORT).show();
+//                return true;
+//            }
+//        };
+//        baiduMap.setOnMarkerClickListener(poiOverlay);
+//        // poiSearch.searchInBound(getSearchInBoundParams());
+//        poiSearch.searchInCity(getSearchInCityParams());
+
+    }
+//    //城市搜索
+//    private PoiCitySearchOption getSearchInCityParams(){
+//        PoiCitySearchOption poiCitySearchOption = new PoiCitySearchOption();
+//        poiCitySearchOption.city("贵阳市").keyword("加油站").pageNum(4);
+//        return poiCitySearchOption;
+//    }
+//    //周边搜索
+//    private PoiBoundSearchOption getSearchInBoundParams(){
+//        PoiBoundSearchOption poiBoundSearchOption =new PoiBoundSearchOption();
+//        /*106.630983,26.405209
+//        106.636043,26.410937
+//         * 西南 106.631844,26.406081
+//         * 东北 106.63497,26.409575
+//         * 两个点之间围成的矩形
+//         */
+//        LatLngBounds latLngBounds = new LatLngBounds.Builder()
+//                .include(new LatLng(26.405209,106.630983))
+//                .include(new LatLng(26.410937,106.636043)).build();
+//
+//        poiBoundSearchOption.bound(latLngBounds); // 指定搜索范围
+//        poiBoundSearchOption.keyword("加油站");  //指定搜索内容
+//        return poiBoundSearchOption;
+//    }
+    //获取兴趣点信息
+    @Override
+    public void onGetPoiResult(PoiResult poiResult) {
+//        //不等于没有错误，就是有错误（后期可以更详细判断错误类型）
+//        if (poiResult == null && poiResult.error != SearchResult.ERRORNO.NO_ERROR){
+//            Toast.makeText(getContext(), "没有检索到结果", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        poiOverlay.setData(poiResult);  //把数据设置给覆盖物
+//        poiOverlay.addToMap(); //把所有数据变成覆盖物添加到BaiduMap
+//        poiOverlay.zoomToSpan(); //把所有搜索结果在一个屏幕内显示出来
+    }
+    //获取兴趣点详情信息0
+    @Override
+    public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-        baiduMap.setMyLocationEnabled(false);
-        locationClient.stop();
+    public void onGetPoiDetailResult(PoiDetailSearchResult poiDetailSearchResult) {
+
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mapView.onResume();
+    public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
+
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        mapView.onPause();
+
+
+
+    //标志拖动监听器
+    BaiduMap.OnMarkerDragListener  onMarkerDragListener = new BaiduMap.OnMarkerDragListener() {
+        //标志正在拖动
+        @Override
+        public void onMarkerDrag(Marker marker) {
+            mapView.updateViewLayout(pop,createLayoutParams(marker.getPosition()));
+        }
+        //标志拖动结束
+        @Override
+        public void onMarkerDragEnd(Marker marker) {
+            mapView.updateViewLayout(pop,createLayoutParams(marker.getPosition()));
+        }
+        //标志开始拖动
+        @Override
+        public void onMarkerDragStart(Marker marker) {
+            mapView.updateViewLayout(pop,createLayoutParams(marker.getPosition()));
+        }
+    };
+    BaiduMap.OnMarkerClickListener onMarkerClickListener =new BaiduMap.OnMarkerClickListener() {
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+            //显示一个停车场的信息 vicinity_pop
+            if (pop == null){
+                pop =View.inflate(getActivity(), R.layout.vicinity_pop,null);
+                tv_title = pop.findViewById(R.id.tv_vicinity_location_title);
+
+                mapView.addView(pop,createLayoutParams(marker.getPosition()));
+            }else {
+                mapView.updateViewLayout(pop,createLayoutParams(marker.getPosition()));
+            }
+            tv_title.setText(marker.getTitle());
+            return true;
+        }
+    };
+
+    /**
+     * 创建一个布局参数
+     * @param position（位置）
+     * @return
+     */
+    private MapViewLayoutParams createLayoutParams(LatLng position){
+        MapViewLayoutParams.Builder builder = new MapViewLayoutParams.Builder();
+        builder.layoutMode(MapViewLayoutParams.ELayoutMode.mapMode); //指定坐标类型为经纬度
+        builder.position(position);  //设置标志位置
+        builder.yOffset(-65);
+        MapViewLayoutParams params = builder.build();
+        return params;
     }
+    /**
+     * 自定义标志
+     */
+   private void initMarker(){
+       MarkerOptions options1 = new MarkerOptions();
+       BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.vicinity_location_blue);
+       options1.position(IconPos).icon(bitmapDescriptor).draggable(true).title("中间");
+       baiduMap.addOverlay(options1);
+       options1.position(new LatLng(IconPos.latitude + 0.001,IconPos.longitude)).title("上面").icon(bitmapDescriptor).draggable(true);
+       baiduMap.addOverlay(options1);
+       options1.position(new LatLng(IconPos.latitude - 0.001,IconPos.longitude)).title("下面").icon(bitmapDescriptor).draggable(true);
+       baiduMap.addOverlay(options1);
+   }
+    /**
+     * 放大地图缩放级别
+     *
+     * @param v
+     */
+    public void setZoomIn(View v) {
+        baiduMap.setMapStatus(MapStatusUpdateFactory.zoomIn());
+    }
+
+    /**
+     * 缩小地图缩放级别
+     *
+     * @param v
+     */
+    public void setZoomOut(View v) {
+        baiduMap.setMapStatus(MapStatusUpdateFactory.zoomOut());
+    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        locationClient.stop();
+//        baiduMap.setMyLocationEnabled(false);
+//        mapView.onDestroy();
+//    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        mapView.onResume();
+//    }
+//
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        mapView.onPause();
+//    }
 }
