@@ -58,6 +58,7 @@ public class MyFragment extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_myFragment_to_settingFragment);
             }
         });
+
         binding.itemChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,6 +73,7 @@ public class MyFragment extends Fragment {
             }
         });
         initBannerView();
+
     }
     public void initBannerView(){
         Banner banner = null;

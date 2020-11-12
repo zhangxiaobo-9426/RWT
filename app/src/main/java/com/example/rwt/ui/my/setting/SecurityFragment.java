@@ -30,12 +30,10 @@ public class SecurityFragment extends Fragment {
 //            @SuppressLint("RestrictedApi")
             @Override
             public void onClick(View view) {
-//               getActivity().finish();
-//                Navigation.findNavController(view).getBackStack();
                 Navigation.findNavController(view).popBackStack();
             }
         });
-//        binding.mySecurityRealName.setOnClickListener(new View.OnClickListener() {
+//      binding.mySecurityRealName.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
 //
