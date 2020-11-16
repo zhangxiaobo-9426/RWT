@@ -9,7 +9,11 @@
         android:id="@+id/vicinityFragment"
         android:name="com.example.rwt.ui.vicinity.VicinityFragment"
         android:label="@string/title_vicinity"
-        tools:layout="@layout/vicinity_fragment" />
+        tools:layout="@layout/vicinity_fragment" >
+        <action
+            android:id="@+id/action_vicinityFragment_to_searchDetailsFragment"
+            app:destination="@id/searchDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/reservationFragment"
         android:name="com.example.rwt.ui.reservation.ReservationFragment"
@@ -29,4 +33,9 @@
         android:name="com.example.rwt.ui.my.setting.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/searchDetailsFragment"
+        android:name="com.example.rwt.ui.vicinity.searchdetails.SearchDetailsFragment"
+        android:label="fragment_search_details"
+        tools:layout="@layout/fragment_search_details" />
 </navigation>

@@ -1,7 +1,12 @@
 package com.example.rwt.ui.vicinity;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
@@ -28,6 +33,18 @@ public class VicinityAdapter extends BaseQuickAdapter<VicinityCar, BaseViewHolde
                 .setText(R.id.vicinity_item_distance, vicinityCar.getDistance())
                 .setText(R.id.vicinity_item_time, vicinityCar.getTime())
                 .setText(R.id.vicinity_item_location, vicinityCar.getLocation());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavController controller = Navigation.findNavController(view);
+                Bundle bundle = new Bundle();
+                bundle.putInt("VICINITY_ID",holder.getAdapterPosition());
+                controller.navigate(R.id.action_vicinityFragment_to_searchDetailsFragment,bundle);
+            }
+        });
+
     }
+
 
 }
