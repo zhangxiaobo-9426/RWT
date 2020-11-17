@@ -7,10 +7,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.baidu.mapapi.map.BaiduMap;
@@ -44,6 +47,9 @@ public class ReservationFragment extends Fragment implements OnGetPoiSearchResul
     private PoiSearch mPoiSearch = null;
 
 
+    private Button button_reservation_button;
+
+
     public static ReservationFragment newInstance() {
         return new ReservationFragment();
     }
@@ -59,6 +65,14 @@ public class ReservationFragment extends Fragment implements OnGetPoiSearchResul
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(ReservationViewModel.class);
         // TODO: Use the ViewModel
+        button_reservation_button = getView().findViewById(R.id.button_reservation_button);
+        button_reservation_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_reservationFragment_to_poiSugSearchFragment);
+            }
+        });
+
 
         mapView = getView().findViewById(R.id.r_bMapView);
 

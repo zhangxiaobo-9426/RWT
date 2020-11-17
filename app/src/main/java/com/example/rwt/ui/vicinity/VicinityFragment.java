@@ -252,7 +252,6 @@ public class VicinityFragment extends Fragment implements OnGetPoiSearchResultLi
                             }
                         });
     }
-
     //本地加载
 //    private void loadData(){
 //        List<VicinityCar> list = new ArrayList<>();
@@ -408,8 +407,10 @@ public class VicinityFragment extends Fragment implements OnGetPoiSearchResultLi
 
         //标记自己位置的图标
         MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
-        locationBuilder.longitude(bdLocation.getLongitude());
-        locationBuilder.latitude(bdLocation.getLatitude());
+        locationBuilder.longitude(myPos.longitude);
+        locationBuilder.latitude(myPos.latitude);
+//        locationBuilder.longitude(bdLocation.getLongitude());
+//        locationBuilder.latitude(bdLocation.getLatitude());
         MyLocationData locationData = locationBuilder.build();
         baiduMap.setMyLocationData(locationData);
 

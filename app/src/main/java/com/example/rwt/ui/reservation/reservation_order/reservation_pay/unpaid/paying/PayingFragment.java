@@ -1,4 +1,4 @@
-package com.example.rwt.ui.vicinity.searchdetails;
+package com.example.rwt.ui.reservation.reservation_order.reservation_pay.unpaid.paying;
 
 
 import android.os.Bundle;
@@ -11,18 +11,17 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.rwt.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchDetailsFragment extends Fragment {
+public class PayingFragment extends Fragment {
+    private ImageView paying_ImageView;
 
-    private Button button_search_details_navigaton;
-
-    public SearchDetailsFragment() {
+    public PayingFragment() {
         // Required empty public constructor
     }
 
@@ -31,17 +30,17 @@ public class SearchDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search_details, container, false);
+        return inflater.inflate(R.layout.fragment_paying, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        button_search_details_navigaton = view.findViewById(R.id.button_search_details_navigaton);
-        button_search_details_navigaton.setOnClickListener(new View.OnClickListener() {
+        paying_ImageView = view.findViewById(R.id.paying_ImageView);
+        paying_ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_searchDetailsFragment_to_navigationFragment);
+                Navigation.findNavController(view).navigate(R.id.action_payingFragment_to_paymentSuccessfulFragment);
             }
         });
     }

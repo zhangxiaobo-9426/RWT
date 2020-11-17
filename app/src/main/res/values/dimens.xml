@@ -11,4 +11,6 @@
     <dimen name="poi_title_size">14sp</dimen>
     <dimen name="ui_size">12sp</dimen>
     <dimen name="actionbar_size">35sp</dimen>
+    <dimen name="top_titlte_textSize">18sp</dimen>
+    <dimen name="CardView_layout_margin">4dp</dimen>
 </resources>

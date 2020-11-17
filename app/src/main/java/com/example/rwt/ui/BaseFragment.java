@@ -13,6 +13,9 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapView;
 
 public class BaseFragment extends Fragment {
+
+
+
     public void showToast(CharSequence text){
         Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
     }
