@@ -181,7 +181,7 @@
                 app:layout_constraintTop_toTopOf="@+id/guideline75" />
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/button_payment_successful_navigation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/holo_blue_dark"
