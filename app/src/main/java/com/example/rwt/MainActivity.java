@@ -5,27 +5,10 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-<<<<<<< HEAD
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.content.Context;
-import android.media.Image;
-import android.os.Bundle;
-import android.widget.GridLayout;
-import android.widget.ImageView;
-
-import com.baidu.mapapi.SDKInitializer;
-import com.example.rwt.databinding.MyFragmentBinding;
-=======
-import androidx.navigation.ui.NavigationUI;
-
->>>>>>> temp
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.youth.banner.loader.ImageLoader;
 

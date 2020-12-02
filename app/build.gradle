@@ -10,15 +10,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-<<<<<<< HEAD
         dataBinding {
             enabled true
-=======
 //        dataBinding {enabled true}
         compileOptions {//就算您使用 AndroidStuido v3.0, 也需要配置以下参数
             targetCompatibility JavaVersion.VERSION_1_8
             sourceCompatibility JavaVersion.VERSION_1_8
->>>>>>> temp
         }
     }
     buildTypes {
@@ -76,4 +73,4 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
 
-}
+}}
