@@ -14,11 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.rwt.R;
+import com.example.rwt.ui.base.BaseFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ReservationOrderFragment extends Fragment {
+public class ReservationOrderFragment extends BaseFragment {
 
     private Button button_reservation_now,button_cancel_appointment;
 

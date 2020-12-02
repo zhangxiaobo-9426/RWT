@@ -34,14 +34,11 @@ import com.baidu.mapapi.search.poi.PoiNearbySearchOption;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
 import com.example.rwt.R;
+import com.example.rwt.ui.base.BaseFragment;
 
-public class ReservationFragment extends Fragment implements OnGetPoiSearchResultListener {
+public class ReservationFragment extends BaseFragment implements OnGetPoiSearchResultListener {
 
     private ReservationViewModel mViewModel;
-
-    // 声明 PoiSearch
-    private MapView mapView = null;
-    private BaiduMap baiduMap = null;
 
     // 声明 PoiSearch
     private PoiSearch mPoiSearch = null;
@@ -74,13 +71,6 @@ public class ReservationFragment extends Fragment implements OnGetPoiSearchResul
         });
 
 
-        mapView = getView().findViewById(R.id.r_bMapView);
-
-        baiduMap = mapView.getMap();
-        //显示的地图样式
-        baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
-        //设置是否显示交通图
-        baiduMap.setTrafficEnabled(true);
 
         mPoiSearch = PoiSearch.newInstance();
         mPoiSearch.setOnGetPoiSearchResultListener(this);

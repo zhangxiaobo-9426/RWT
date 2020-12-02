@@ -10,29 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.baidu.mapapi.map.MapView
-            android:id="@+id/search_MapView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3"
-            app:layout_constraintVertical_bias="1.0"
-            tools:src="@tools:sample/avatars">
-
-        </com.baidu.mapapi.map.MapView>
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/top_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <include
+            layout="@layout/base_mapview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline27"
@@ -82,26 +63,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.95" />
-
-        <ImageView
-            android:id="@+id/imageView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/map_enlarge"
-            app:layout_constraintEnd_toStartOf="@+id/guideline30"
-            app:layout_constraintStart_toStartOf="@+id/guideline34"
-            app:layout_constraintTop_toTopOf="@+id/guideline27" />
-
-        <ImageView
-            android:id="@+id/imageView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/map_narrow"
-            app:layout_constraintBottom_toTopOf="@+id/guideline28"
-            app:layout_constraintEnd_toStartOf="@+id/guideline30"
-            app:layout_constraintStart_toStartOf="@+id/guideline34"
-            app:layout_constraintTop_toBottomOf="@+id/imageView10" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"

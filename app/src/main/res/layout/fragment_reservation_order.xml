@@ -6,40 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.reservation.reservation_order.ReservationOrderFragment" >
 
-    <com.baidu.mapapi.map.MapView
-        android:id="@+id/imageView16"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView19"
-        app:layout_constraintVertical_bias="0.0">
-
-    </com.baidu.mapapi.map.MapView>
-
-    <ImageView
-        android:id="@+id/imageView19"
+    <include
+        layout="@layout/base_mapview"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/top_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/reservation_order_top_title"
-        android:textColor="@color/colorBlack"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView16"
-        app:layout_constraintEnd_toEndOf="@+id/imageView19"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView19" />
+        android:layout_height="wrap_content" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline43"

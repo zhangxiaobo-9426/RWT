@@ -14,11 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.rwt.R;
+import com.example.rwt.ui.base.BaseFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchDetailsFragment extends Fragment {
+public class SearchDetailsFragment extends BaseFragment {
 
     private Button button_search_details_navigaton;
 

@@ -14,11 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.rwt.R;
+import com.example.rwt.ui.base.BaseFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PaymentSuccessfulFragment extends Fragment {
+public class PaymentSuccessfulFragment extends BaseFragment {
 
 
      private Button button_payment_successful_navigation;

@@ -6,17 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.reservation.reservation_order.reservation_pay.unpaid.payment_successful.PaymentSuccessfulFragment" >
 
-    <com.baidu.mapapi.map.MapView
-        android:id="@+id/imageView28"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+    <include
+        layout="@layout/base_mapview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView29"
-        tools:src="@tools:sample/avatars">
-
-    </com.baidu.mapapi.map.MapView>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline68"
@@ -45,16 +42,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.95" />
-
-    <ImageView
-        android:id="@+id/imageView29"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/top_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"

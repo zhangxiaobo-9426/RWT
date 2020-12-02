@@ -10,27 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.baidu.mapapi.map.MapView
-            android:id="@+id/r_bMapView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView9"
-            tools:src="@tools:sample/avatars">
-
-        </com.baidu.mapapi.map.MapView>
-
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/top_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <include
+            layout="@layout/base_mapview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline19"

@@ -10,11 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.rwt.R;
+import com.example.rwt.ui.base.BaseFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NavigationFragment extends Fragment {
+public class NavigationFragment extends BaseFragment {
 
 
     public NavigationFragment() {
