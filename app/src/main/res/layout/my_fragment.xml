@@ -1,343 +1,399 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.my.MyFragment">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/top_image"
-        android:padding="5dp">
-        <ImageView
-            android:id="@+id/my_img"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:contentDescription="@string/my_head"
-            android:src="@drawable/my_img" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/my_img"
-            android:text="@string/my_phone"
-            android:textSize="18sp"
-            android:layout_marginStart="20dp"
-            android:layout_centerVertical="true"/>
-    </RelativeLayout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:baselineAligned="false">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.my.MyFragment">
+
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:background="@drawable/shape"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            >
-            <TextView
-                android:id="@+id/my_activity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/my_activity"
-                tools:ignore="RelativeOverlap"
-                android:textColor="@color/colorBlack"
-                android:textSize="16sp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/my_activity_detail"
-                android:textColor="@color/colorBlue"
-                android:textSize="14sp"
-                android:layout_below="@id/my_activity"/>
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/top_image"
+            android:padding="5dp">
+
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/my_activity"
-                android:layout_alignParentEnd="true"
+                android:id="@+id/my_img"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:contentDescription="@string/my_activity" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:background="@drawable/shape"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            >
+                android:layout_marginStart="10dp"
+                android:contentDescription="@string/my_head"
+                android:src="@drawable/my_img" />
 
             <TextView
-                android:id="@+id/my_discount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/my_discount"
-                android:textColor="@color/colorBlack"
-                tools:ignore="RelativeOverlap"
-                android:textSize="16sp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/my_discount_detail"
-                android:textSize="14sp"
-                android:layout_below="@id/my_discount"
-                android:textColor="@color/colorBlue"/>
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/my_"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/my_red" />
+                android:layout_toEndOf="@+id/my_img"
+                android:text="@string/my_phone"
+                android:textSize="18sp"
+                android:layout_marginStart="20dp"
+                android:layout_centerVertical="true" />
         </RelativeLayout>
-    </LinearLayout>
-    <com.youth.banner.Banner
-        android:id="@+id/my_banner"
-        android:layout_width="wrap_content"
-        android:layout_height="119dp"></com.youth.banner.Banner>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape"
-        android:layout_margin="10dp"
-        android:padding="10dp"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textSize="16sp"
-                android:textColor="@color/colorBlack"
-                android:layout_height="wrap_content"
-                android:text="@string/my_order"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/my_all_order"
-                android:textSize="16sp"
-                android:textColor="@color/colorBlack"
-                android:drawableEnd="@drawable/my_more_order"/>
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorMyActivityBorder"
-            android:layout_marginTop="5dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:baselineAligned="false">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/my_waitedpay"
-                    android:contentDescription="@string/my_more" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
-                    android:text="@string/my_waited_pay"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/my_using"
-                    android:contentDescription="@string/my_doing" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
-                    android:text="@string/my_doing"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/my_cancel"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
-                    android:text="@string/my_cancel"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/my_successe"
-                    android:contentDescription="@string/my_success" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
-                    android:text="@string/my_success"/>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:padding="10dp"
-        android:orientation="vertical"
-        android:background="@drawable/shape">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/my_app_setting"
-            android:textSize="16sp"
-            android:textColor="@color/colorBlack"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorMyActivityBorder"
-            android:layout_marginTop="5dp"/>
-        <LinearLayout
-            android:id="@+id/item_security"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp">
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:src="@drawable/my_security"
-                android:layout_weight="1"
-                android:contentDescription="@string/my_security" />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/my_security"
-                android:textSize="14sp"
-                android:layout_gravity="center"
-                android:textColor="@color/colorBlack"
-                android:layout_weight="3"/>
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:src="@drawable/my_more"
-                android:layout_weight="1"
-                android:contentDescription="@string/my_more" />
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorMyActivityBorder"
-            android:layout_marginTop="5dp"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp">
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:src="@drawable/my_chat"
-                android:layout_weight="1"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/my_chat"
-                android:textSize="14sp"
-                android:layout_gravity="center"
-                android:textColor="@color/colorBlack"
-                android:layout_weight="3"/>
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:src="@drawable/my_more"
-                android:layout_weight="1"/>
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorMyActivityBorder"
-            android:layout_marginTop="5dp"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp">
 
-            <ImageView
-                android:id="@+id/img_setting"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:src="@drawable/my_setting" />
-            <TextView
-                android:layout_width="0dp"
+            <RelativeLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/my_setting"
-                android:textSize="14sp"
-                android:layout_gravity="center"
-                android:textColor="@color/colorBlack"
-                android:layout_weight="3"/>
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:src="@drawable/my_more"
-                android:layout_weight="1"/>
+                android:padding="10dp"
+                android:background="@drawable/shape"
+                android:layout_margin="10dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/my_activity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/my_activity"
+                    tools:ignore="RelativeOverlap"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_activity_detail"
+                    android:textColor="@color/colorBlue"
+                    android:textSize="14sp"
+                    android:layout_below="@id/my_activity" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/my_activity"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/my_activity" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/shape"
+                android:layout_margin="10dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/my_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/my_discount"
+                    android:textColor="@color/colorBlack"
+                    tools:ignore="RelativeOverlap"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_discount_detail"
+                    android:textSize="14sp"
+                    android:layout_below="@id/my_discount"
+                    android:textColor="@color/colorBlue" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/my_"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/my_red" />
+            </RelativeLayout>
         </LinearLayout>
-        <View
+
+        <com.youth.banner.Banner
+            android:id="@+id/my_banner"
+            android:layout_width="wrap_content"
+            android:layout_height="119dp"></com.youth.banner.Banner>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorMyActivityBorder"
-            android:layout_marginTop="5dp"/>
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_order" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_all_order"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorBlack"
+                    android:drawableEnd="@drawable/my_more_order" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorMyActivityBorder"
+                android:layout_marginTop="5dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/my_waitedpay"
+                        android:contentDescription="@string/my_more" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        android:text="@string/my_waited_pay" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/my_using"
+                        android:contentDescription="@string/my_doing" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        android:text="@string/my_doing" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/my_cancel" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        android:text="@string/my_cancel" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/my_successe"
+                        android:contentDescription="@string/my_success" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        android:text="@string/my_success" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:background="@drawable/shape">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_app_setting"
+                android:textSize="16sp"
+                android:textColor="@color/colorBlack" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorMyActivityBorder"
+                android:layout_marginTop="5dp" />
+
+            <LinearLayout
+                android:id="@+id/item_security"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/my_security"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/my_security" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_security"
+                    android:textSize="14sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorBlack"
+                    android:layout_weight="8" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/my_more"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/my_more" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorMyActivityBorder"
+                android:layout_marginTop="5dp" />
+
+            <LinearLayout
+                android:id="@+id/item_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/my_chat"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_chat"
+                    android:textSize="14sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorBlack"
+                    android:layout_weight="8" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/my_more"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorMyActivityBorder"
+                android:layout_marginTop="5dp" />
+
+            <LinearLayout
+                android:id="@+id/item_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <ImageView
+                    android:id="@+id/img_setting"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/my_setting" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_setting"
+                    android:textSize="14sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorBlack"
+                    android:layout_weight="8" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/my_more"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorMyActivityBorder"
+                android:layout_marginTop="5dp" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</layout>

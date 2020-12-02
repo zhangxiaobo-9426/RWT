@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.youth.banner.loader.ImageLoader;
 
 public class MainActivity extends AppCompatActivity {
+
     public static class ImageLoadBanner extends ImageLoader{
 
         @Override
@@ -27,12 +28,13 @@ public class MainActivity extends AppCompatActivity {
 //        SDKInitializer.initialize(getApplicationContext());
 
         setContentView(R.layout.activity_main);
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         NavController navController = Navigation.findNavController(this,R.id.fragment);
-//       /AppBarConfiguration configuration = new AppBarConfiguration.Builder(bottomNavigationView.getMenu()).build();
-//        NavigationUI.setupActionBarWithNavController(this,navController,configuration);
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
 
+        
     }
+
 
 }

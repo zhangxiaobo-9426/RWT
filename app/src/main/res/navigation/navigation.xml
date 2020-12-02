@@ -31,6 +31,12 @@
         <action
             android:id="@+id/action_myFragment_to_settingFragment"
             app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_myFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_myFragment_to_securityFragment"
+            app:destination="@id/securityFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -38,6 +44,7 @@
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
     <fragment
+<<<<<<< HEAD
         android:id="@+id/searchDetailsFragment"
         android:name="com.example.rwt.ui.vicinity.searchdetails.SearchDetailsFragment"
         android:label="fragment_search_details"
@@ -96,4 +103,15 @@
         android:name="com.example.rwt.ui.vicinity.navigation.NavigationFragment"
         android:label="fragment_navigation"
         tools:layout="@layout/fragment_navigation" />
+=======
+        android:id="@+id/chatFragment"
+        android:name="com.example.rwt.ui.my.setting.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/securityFragment"
+        android:name="com.example.rwt.ui.my.setting.SecurityFragment"
+        android:label="fragment_security"
+        tools:layout="@layout/fragment_security" />
+>>>>>>> mine
 </navigation>
