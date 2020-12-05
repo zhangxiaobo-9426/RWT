@@ -1,56 +1,27 @@
 package com.example.rwt.ui.vicinity;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProviders;
-
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.graphics.Point;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Layout;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.baidu.location.BDAbstractLocationListener;
-import com.baidu.location.BDLocation;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.MapStatusUpdate;
-import com.baidu.mapapi.map.MapStatusUpdateFactory;
-import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.MapViewLayoutParams;
-import com.baidu.mapapi.map.Marker;
-import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.map.TextOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.baidu.mapapi.overlayutil.PoiOverlay;
-import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
 import com.baidu.mapapi.search.poi.PoiBoundSearchOption;
-import com.baidu.mapapi.search.poi.PoiCitySearchOption;
 import com.baidu.mapapi.search.poi.PoiDetailResult;
 import com.baidu.mapapi.search.poi.PoiDetailSearchResult;
 import com.baidu.mapapi.search.poi.PoiIndoorResult;
-import com.baidu.mapapi.search.poi.PoiNearbySearchOption;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
 import com.example.rwt.R;
@@ -59,7 +30,6 @@ import com.example.rwt.ui.network.ApiDemo;
 import com.example.rwt.ui.network.RetrofitFactory;
 import com.example.rwt.ui.vicinity.entity.VicinityCar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -116,8 +86,8 @@ public class VicinityFragment extends BaseFragment implements OnGetPoiSearchResu
          */
         /*-----------------Poi周边搜索------------------------*/
         LatLngBounds searchBounds = new LatLngBounds.Builder()
-                .include(new LatLng( 26.395228, 106.623059))
-                .include(new LatLng( 26.418656, 106.64584))
+                .include(new LatLng(26.395228, 106.623059))
+                .include(new LatLng(26.418656, 106.64584))
                 .build();
 
         /*
@@ -128,7 +98,6 @@ public class VicinityFragment extends BaseFragment implements OnGetPoiSearchResu
                 .keyword("停车场"));
 
 
-
         recyclerView = view.findViewById(R.id.recyclerView);
         // 第一步：指定布局管理器
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
@@ -137,14 +106,15 @@ public class VicinityFragment extends BaseFragment implements OnGetPoiSearchResu
         adapter = new VicinityAdapter(R.layout.vicinity_item);
         recyclerView.setAdapter(adapter);
         //recyclerView分割线
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
 //        loadData();
         loadDatahttp();
 
     }
+
     //网络加载
-    private void loadDatahttp(){
+    private void loadDatahttp() {
         // 获取Retrofit对象
         RetrofitFactory.getRetrofit().create(ApiDemo.class)
                 .getCar()
@@ -153,19 +123,16 @@ public class VicinityFragment extends BaseFragment implements OnGetPoiSearchResu
                 // 切换到UI线程执行UI操作
                 .observeOn(AndroidSchedulers.mainThread())
                 // 获取网络请求结果
-                .subscribe(new Consumer<List<VicinityCar>>()
-                           {
+                .subscribe(new Consumer<List<VicinityCar>>() {
                                @Override
-                               public void accept(List<VicinityCar> repos) throws Exception
-                               {
+                               public void accept(List<VicinityCar> repos) throws Exception {
 
                                    adapter.addData(repos);
                                }
                            },
                         new Consumer<Throwable>() {
                             @Override
-                            public void accept(Throwable throwable) throws Exception
-                            {
+                            public void accept(Throwable throwable) throws Exception {
                                 throwable.printStackTrace();
                             }
                         });
@@ -199,7 +166,7 @@ public class VicinityFragment extends BaseFragment implements OnGetPoiSearchResu
             baiduMap.clear();
 
             //创建PoiOverlay对象
-            PoiOverlay poiOverlay = new PoiOverlay(baiduMap){
+            PoiOverlay poiOverlay = new PoiOverlay(baiduMap) {
                 @Override
                 public boolean onPoiClick(int i) {
                     poiInfo = getPoiResult().getAllPoi().get(i);
@@ -219,6 +186,7 @@ public class VicinityFragment extends BaseFragment implements OnGetPoiSearchResu
 
 
     }
+
     //获取兴趣点详情信息0
     @Override
     public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
@@ -233,19 +201,5 @@ public class VicinityFragment extends BaseFragment implements OnGetPoiSearchResu
     public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
 
     }
-
-    /**
-     * 自定义标志
-     */
-//   private void initMarker(){
-//       MarkerOptions options1 = new MarkerOptions();
-//       BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.vicinity_location_blue);
-//       options1.position(IconPos).icon(bitmapDescriptor).draggable(true).title("中间");
-//       baiduMap.addOverlay(options1);
-//       options1.position(new LatLng(IconPos.latitude + 0.001,IconPos.longitude)).title("上面").icon(bitmapDescriptor).draggable(true);
-//       baiduMap.addOverlay(options1);
-//       options1.position(new LatLng(IconPos.latitude - 0.001,IconPos.longitude)).title("下面").icon(bitmapDescriptor).draggable(true);
-//       baiduMap.addOverlay(options1);
-//   }
 
 }

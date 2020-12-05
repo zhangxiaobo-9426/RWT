@@ -345,6 +345,21 @@ public class BaseFragment extends Fragment {
         baiduMap.setMapStatus(MapStatusUpdateFactory.zoomOut());
     }
 
+    /**
+     * 自定义标志
+     */
+//   private void initMarker(){
+//       MarkerOptions options1 = new MarkerOptions();
+//       BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.vicinity_location_blue);
+//       options1.position(IconPos).icon(bitmapDescriptor).draggable(true).title("中间");
+//       baiduMap.addOverlay(options1);
+//       options1.position(new LatLng(IconPos.latitude + 0.001,IconPos.longitude)).title("上面").icon(bitmapDescriptor).draggable(true);
+//       baiduMap.addOverlay(options1);
+//       options1.position(new LatLng(IconPos.latitude - 0.001,IconPos.longitude)).title("下面").icon(bitmapDescriptor).draggable(true);
+//       baiduMap.addOverlay(options1);
+//   }
+
+
 
 //    @Override
 //    public void onDestroy() {

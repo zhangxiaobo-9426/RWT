@@ -13,6 +13,10 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- if you want to load images from the internet -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- if you want to load images from a file OR from the internet -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 用于ugc事件上报拍照录像 -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <!-- 用于ugc事件上报录音 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
         android:name=".MyApplication"

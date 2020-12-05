@@ -39,7 +39,11 @@ public class VicinityAdapter extends BaseQuickAdapter<VicinityCar, BaseViewHolde
             public void onClick(View view) {
                 NavController controller = Navigation.findNavController(view);
                 Bundle bundle = new Bundle();
-                bundle.putInt("VICINITY_ID",holder.getAdapterPosition());
+                bundle.putString("VICINITY_TITLE",vicinityCar.getTitle());
+                bundle.putDouble("VICINITY_LATITUDE",vicinityCar.getLatitude());
+                bundle.putDouble("VICINITY_LONGITUDE",vicinityCar.getLongitude());
+                bundle.putString("VICINITY_TIME",vicinityCar.getTime());
+                bundle.putString("VICINITY_LOCATION",vicinityCar.getLocation());
                 controller.navigate(R.id.action_vicinityFragment_to_searchDetailsFragment,bundle);
             }
         });
