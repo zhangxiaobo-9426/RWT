@@ -35,7 +35,12 @@ android {
         cleanedAnnotations
         compile.exclude group: 'org.jetbrains', module: 'annotations'
     }
-
+    defaultConfig {
+            // 避免"64K 引用限制"
+            multiDexEnabled true
+            // 导航SDK内部使用了annotationProcessor，需要添加下面代码，防止编译异常
+            javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+    }
 }
 
 dependencies {
@@ -52,9 +57,6 @@ dependencies {
 
     implementation 'com.youth.banner:banner:1.4.10'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
-
-    implementation 'com.youth.banner:banner:1.4.10'
-
 
     // retrofit 2
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'

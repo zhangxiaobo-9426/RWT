@@ -3,6 +3,8 @@ package com.example.rwt.ui.vicinity.navigation;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -30,4 +32,8 @@ public class NavigationFragment extends BaseFragment {
         return inflater.inflate(R.layout.fragment_navigation, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
 }
