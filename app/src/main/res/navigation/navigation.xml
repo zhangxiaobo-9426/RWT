@@ -37,6 +37,12 @@
         <action
             android:id="@+id/action_myFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_myFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_myFragment_to_orderFragment2"
+            app:destination="@id/orderFragment2" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -116,4 +122,39 @@
         android:name="com.example.rwt.ui.my.setting.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.rwt.ui.my.login.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_checkFragment"
+            app:destination="@id/checkFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.rwt.ui.my.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_myFragment"
+            app:destination="@id/myFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkFragment"
+        android:name="com.example.rwt.ui.my.login.CheckFragment"
+        android:label="fragment_check"
+        tools:layout="@layout/fragment_check" >
+        <action
+            android:id="@+id/action_checkFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderFragment2"
+        android:name="com.example.rwt.ui.my.setting.order.OrderFragment"
+        android:label="fragment_order2"
+        tools:layout="@layout/fragment_order2" />
 </navigation>

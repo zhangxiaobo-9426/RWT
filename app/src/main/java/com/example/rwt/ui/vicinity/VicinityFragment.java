@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -49,6 +50,7 @@ public class VicinityFragment extends BaseFragment implements OnGetPoiSearchResu
     //用于显示列表
     private RecyclerView recyclerView;
     private VicinityAdapter adapter;
+    private VicinityAdapter2 adapter2;
 
     public static VicinityFragment newInstance() {
         return new VicinityFragment();

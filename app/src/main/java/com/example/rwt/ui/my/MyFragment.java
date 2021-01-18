@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.rwt.MainActivity;
 import com.example.rwt.R;
@@ -26,6 +27,8 @@ import java.util.List;
 public class MyFragment extends Fragment {
 
     private MyViewModel mViewModel;
+    private ImageView my_img;
+    private TextView my_qaun ,my_name;
     MyFragmentBinding binding;
     public static MyFragment newInstance() {
         return new MyFragment();
@@ -42,8 +45,31 @@ public class MyFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        my_img = view.findViewById(R.id.my_img);
+        my_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_myFragment_to_loginFragment);
+            }
+        });
         // 做初始化操作
+
+        my_qaun = view.findViewById(R.id.my_qaun);
+        my_qaun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_myFragment_to_orderFragment2);
+            }
+        });
+        my_name = view.findViewById(R.id.my_name);
+        try {
+            Bundle bundle = getArguments();
+            my_name.setText(bundle.getString("RI"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override

@@ -24,7 +24,7 @@
     <string name="my_setting">设置</string>
     <string name="my_advertise">广告</string>
     <string name="my_more">更多</string>
-<!--    setting details of mine page-->
+    <!--    setting details of mine page-->
     <string name="my_setting_title">设置</string>
     <string name="my_setting_address">常用地址</string>
     <string name="my_setting_road">实时路况</string>
@@ -37,7 +37,7 @@
     <string name="my_setting_us">关于任我停</string>
     <string name="my_setting_exit">退出登录</string>
 
-<!--    security details of mine page-->
+    <!--    security details of mine page-->
     <string name="my_security_title">账号与安全</string>
     <string name="my_security_RealName">实名认证</string>
     <string name="my_security_RealNameStatus">未认证</string>
@@ -61,4 +61,17 @@
     <string name="reservation_order_buttom_cancel_appointment">取消预约</string>
     <string name="order_pay_WX">微信支付</string>
     <string name="order_pay_ZFB">支付宝支付</string>
+
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="login_not_user">没有账号，点此</string>
+    <string name="login_pwd">请输入密码</string>
+    <string name="login_logo">图标</string>
+    <string name="login_user">请输入账号/手机号</string>
+    <string name="register_user">请输入手机号</string>
+    <string name="register_send">获取验证码</string>
+    <string name="register_get">请输入验证码</string>
+    <string name="register_pwd">请输入密码</string>
+    <string name="register_confirm">请再次输入密码</string>
+    <string name="register_sc">获取成功</string>
 </resources>

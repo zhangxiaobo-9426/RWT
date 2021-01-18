@@ -28,13 +28,14 @@
                 android:src="@drawable/my_img" />
 
             <TextView
+                android:id="@+id/my_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
                 android:layout_toEndOf="@+id/my_img"
                 android:text="@string/my_phone"
-                android:textSize="18sp"
-                android:layout_marginStart="20dp"
-                android:layout_centerVertical="true" />
+                android:textSize="18sp" />
         </RelativeLayout>
 
         <LinearLayout
@@ -151,12 +152,13 @@
                     android:text="@string/my_order" />
 
                 <TextView
+                    android:id="@+id/my_qaun"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/my_more_order"
                     android:text="@string/my_all_order"
-                    android:textSize="16sp"
                     android:textColor="@color/colorBlack"
-                    android:drawableEnd="@drawable/my_more_order" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <View
